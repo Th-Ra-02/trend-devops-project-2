@@ -51,22 +51,22 @@ terraform validate (to validate the configuration)
 terraform plan (shows all the aws services to be used)
 terraform apply (starts all the aws services {may take 10 - 20 mins})
 
-* Terraform outputs:
+- Terraform outputs:
 EKS cluster name
 EKS endpoint
 Jenkins public IP
 Access Jenkins using http://<jenkins_public_ip>:8080
 
-* Install required plugins:
+- Install required plugins:
 Docker Pipeline
 Git
 Kubernetes CLI
 
-* Configure credentials:
+- Configure credentials:
 DockerHub credentials
 AWS IAM Role (attached to EC2)
 
-* CI/CD Pipeline Flow
+- CI/CD Pipeline Flow
 The Jenkins pipeline performs the following steps:
 Checkout Code
 Build Docker Image
@@ -74,7 +74,7 @@ Push Image to DockerHub
 Deploy Application to EKS
 Pipeline definition is stored in Jenkinsfile.
 
-* Kubernetes Deployment:
+- Kubernetes Deployment:
 Kubernetes manifests are located in the k8s/ directory:
 Deployment
 Runs the application container on port 3000
@@ -83,10 +83,10 @@ Type: LoadBalancer
 Exposes application externally via AWS ELB
 Apply manually using 'kubectl apply -f k8s/'
 
-* Application Verification
+- Application Verification
 Get service endpoint using 'kubectl get svc'
 
-* Access the application using 'http://<EXTERNAL-LOADBALANCER-DNS>'
+- Access the application using 'http://<EXTERNAL-LOADBALANCER-DNS>'
 If the webpage loads successfully, deployment is complete.
 
 ** Project Outcome:
@@ -95,7 +95,7 @@ Jenkins automates Docker build and deployment
 Application runs on EKS and is publicly accessible
 End-to-end DevOps workflow achieved
 
-* Notes:
+- Notes:
 Jenkins EC2 instance assumes IAM role for EKS access (no static AWS keys)
 kubectl access is managed via AWS CLI v2
 LoadBalancer service handles external traffic

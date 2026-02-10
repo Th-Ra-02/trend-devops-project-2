@@ -1,101 +1,99 @@
-Guvi Project 2 (trend-app)
-CI/CD with EKS, Jenkins and Terraform 
+CI/CD Pipeline for Web Application Deployment on AWS EKS
+Overview
 
-This project demonstrates a complete DevOps CI/CD pipeline where a web application is containerized using Docker, deployed to Amazon EKS, and automated using Jenkins, with all infrastructure provisioned via Terraform.
+This project demonstrates a complete DevOps CI/CD workflow using Jenkins, Docker, Kubernetes (Amazon EKS), Terraform, and AWS CloudWatch. The goal is to automate infrastructure provisioning, application deployment, and monitoring using cloud-native tools.
 
-** The goal is to show:
-Infrastructure as Code (IaC)
-Containerization
-CI/CD automation
-Kubernetes deployment on AWS
+Objectives
 
-** Infrastructure Architecture:
-Terraform provisions the following resources:
-VPC
-Public subnets
-Internet Gateway
-Amazon EKS
-Managed Kubernetes cluster
-Managed node group
-EC2 Instance
-Jenkins server
-Configured with IAM role to access EKS
-IAM Roles & Policies
-Jenkins EC2 → EKS access
-Security Groups
-Jenkins: SSH (22), Jenkins UI (8080)
-Application LoadBalancer is Created automatically by Kubernetes Service
+Provision AWS infrastructure using Terraform
 
-** Tools & Technologies Used:
-Terraform – Infrastructure provisioning
-AWS EKS – Kubernetes cluster
-Docker – Application containerization
-Jenkins – CI/CD automation
-Kubernetes – Application orchestration
-AWS CLI v2 and kubectl
+Build and containerize the application using Docker
 
-** Repository Structure
---dist/
---tf/
----main.tf
---k8s/
----deployment.yaml
----service.yaml
--Dockerfile
--Jenkinsfile
--README.md
+Automate CI/CD using Jenkins
 
-** Infrastructure Setup (commands to be used in the tf folder)
-terraform init (to initialize terraform)
-terraform validate (to validate the configuration)
-terraform plan (shows all the aws services to be used)
-terraform apply (starts all the aws services {may take 10 - 20 mins})
+Deploy the application on Amazon EKS
 
-- Terraform outputs:
-EKS cluster name
-EKS endpoint
-Jenkins public IP
-Access Jenkins using http://<jenkins_public_ip>:8080
+Monitor infrastructure and application using CloudWatch
 
-- Install required plugins:
-Docker Pipeline
-Git
-Kubernetes CLI
+Tools & Technologies
 
-- Configure credentials:
-DockerHub credentials
-AWS IAM Role (attached to EC2)
+Cloud: AWS
 
-- CI/CD Pipeline Flow
-The Jenkins pipeline performs the following steps:
-Checkout Code
-Build Docker Image
-Push Image to DockerHub
-Deploy Application to EKS
-Pipeline definition is stored in Jenkinsfile.
+IaC: Terraform
 
-- Kubernetes Deployment:
-Kubernetes manifests are located in the k8s/ directory:
-Deployment
-Runs the application container on port 3000
-Service
-Type: LoadBalancer
-Exposes application externally via AWS ELB
-Apply manually using 'kubectl apply -f k8s/'
+CI/CD: Jenkins
 
-- Application Verification
-Get service endpoint using 'kubectl get svc'
+Containerization: Docker
 
-- Access the application using 'http://<EXTERNAL-LOADBALANCER-DNS>'
-If the webpage loads successfully, deployment is complete.
+Orchestration: Kubernetes (EKS)
 
-** Project Outcome:
-Infrastructure created using Terraform
-Jenkins automates Docker build and deployment
-Application runs on EKS and is publicly accessible
-End-to-end DevOps workflow achieved
+Monitoring: AWS CloudWatch
 
-- Notes:
-Jenkins EC2 instance assumes IAM role for EKS access (no static AWS keys)
-kubectl access is managed via AWS CLI v2
-LoadBalancer service handles external traffic
+SCM: GitHub
+
+Registry: DockerHub
+
+Architecture Flow
+
+Code pushed to GitHub
+
+Jenkins pipeline triggers automatically
+
+Docker image is built and pushed to DockerHub
+
+Kubernetes deploys image to EKS
+
+Application exposed via LoadBalancer
+
+Metrics monitored using CloudWatch
+
+CI/CD Pipeline
+
+Stages:
+
+Source code checkout
+
+Docker image build
+
+Docker image push
+
+Secrets are managed using Jenkins Credentials Manager.
+
+Kubernetes Deployment
+
+Deployment: Runs the containerized application
+
+Service: LoadBalancer exposes the application publicly
+
+Verification:
+
+kubectl get pods
+kubectl get svc
+
+Monitoring
+
+EC2 (Jenkins) metrics: CPU & network
+
+EKS node and cluster metrics
+
+Monitoring implemented using AWS CloudWatch
+
+Security
+
+IAM roles used instead of static credentials
+
+Jenkins secrets stored securely
+
+Kubernetes RBAC configured
+
+Infrastructure managed via Terraform
+
+Outcome
+
+Automated CI/CD pipeline implemented successfully
+
+Application deployed on AWS EKS
+
+Public access via LoadBalancer
+
+Monitoring enabled using CloudWatch
